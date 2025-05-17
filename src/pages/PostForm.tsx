@@ -19,6 +19,7 @@ import { useUpdatePost } from "@/hooks/useUpdatePost";
 import { usePost } from "@/hooks/usePost";
 import { Spinner } from "@/components/ui/spinner";
 import SidebarTips from "@/components/SidebarTips";
+import { useAutosave } from "@/hooks/useAutosave";
 
 const postSchema = z.object({
   title: z.string().min(1, "Requerido"),
@@ -42,7 +43,28 @@ export default function PostForm() {
       content: "",
     },
   });
-  const { setValue } = form;
+  const { setValue, watch } = form;
+
+  const draftKey = `draft-post-${postId || "new"}`;
+  const values = watch();
+  const isSaving = useAutosave<PostFormValues>(
+    draftKey,
+    values,
+    (restored) => {
+      if (!isEdit) {
+        setValue("title", restored.title);
+        setValue("content", restored.content);
+      }
+    },
+    1000
+  );
+
+  useEffect(() => {
+    if (post) {
+      setValue("title", post.title);
+      setValue("content", post.content);
+    }
+  }, [post, setValue]);
 
   function onSubmit(values: PostFormValues) {
     if (isEdit && postId) {
@@ -51,13 +73,6 @@ export default function PostForm() {
       createPost(values);
     }
   }
-
-  useEffect(() => {
-    if (post) {
-      setValue("title", post.title);
-      setValue("content", post.content);
-    }
-  }, [post, setValue]);
 
   if (isEdit && isLoading) {
     return (
@@ -105,6 +120,15 @@ export default function PostForm() {
                   </div>
                 </FormControl>
                 <FormMessage />
+
+                <div className="h-6 mt-2 flex items-center justify-start text-sm font-sans text-gray-500">
+                  {isSaving && (
+                    <>
+                      <Spinner className="size-4 text-gray-500" />
+                      <span className="ml-2">Guardando borrador...</span>
+                    </>
+                  )}
+                </div>
               </FormItem>
             )}
           />

@@ -8,26 +8,35 @@ export function useUpdatePost() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const mutation = useMutation({
-        mutationFn: ({ postId, data }: { postId: number; data: { title: string; content: string } }) =>
-            apiUpdatePost(postId, data),
-    })
+        mutationFn: ({
+            postId,
+            data,
+        }: {
+            postId: number;
+            data: { title: string; content: string };
+        }) => apiUpdatePost(postId, data),
+    });
 
     useEffect(() => {
         if (mutation.isSuccess) {
-            toast.success('Post actualizado correctamente');
-            queryClient.invalidateQueries({ queryKey: ['posts'] });
-            navigate('/');
+            toast.success("Post actualizado correctamente");
+            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            const postId = mutation.variables?.postId;
+            if (postId) {
+                localStorage.removeItem(`draft-post-${postId}`);
+            }
+            navigate("/");
         }
-    }, [mutation.isSuccess])
+    }, [mutation.isSuccess, mutation.variables]);
 
     useEffect(() => {
         if (mutation.isError) {
-            toast.error('Error al actualizar el post');
+            toast.error("Error al actualizar el post");
         }
-    }, [mutation.isError, mutation.error])
+    }, [mutation.isError, mutation.error]);
 
     return {
         updatePost: mutation.mutate,
-        isLoading: mutation.isPending
-    }
+        isLoading: mutation.isPending,
+    };
 }

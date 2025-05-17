@@ -16,6 +16,7 @@ export function useCreatePost() {
         if (mutation.isSuccess) {
             toast.success("Post creado con éxito")
             queryClient.invalidateQueries({ queryKey: ["posts"] })
+            localStorage.removeItem('new');
             navigate("/")
         }
     }, [mutation.isSuccess])
