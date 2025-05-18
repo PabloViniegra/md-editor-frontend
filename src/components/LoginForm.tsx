@@ -38,17 +38,23 @@ export default function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem className="font-sans">
-              <FormLabel>Usuario</FormLabel>
+              <FormLabel className="text-text-light dark:text-text-dark">
+                Usuario
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Usuario" {...field} />
+                <Input
+                  placeholder="Usuario"
+                  {...field}
+                  className="bg-white dark:bg-surface-light dark:text-text-dark border border-gray-200 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-primary-500 focus:border-primary-500"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="dark:text-destructive-foreground" />
             </FormItem>
           )}
         />
@@ -58,11 +64,18 @@ export default function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="font-sans">
-              <FormLabel>Contraseña</FormLabel>
+              <FormLabel className="text-text-light dark:text-text-dark">
+                Contraseña
+              </FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Contraseña" {...field} />
+                <Input
+                  type="password"
+                  placeholder="Contraseña"
+                  {...field}
+                  className="bg-white dark:bg-surface-light dark:text-text-dark border border-gray-200 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-primary-500 focus:border-primary-500"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="dark:text-destructive-foreground" />
             </FormItem>
           )}
         />
@@ -70,11 +83,11 @@ export default function LoginForm() {
         <Button
           type="submit"
           disabled={!form.formState.isValid || isPending}
-          className="w-full font-sans font-semibold hover:bg-gray-700 hover:text-white/80"
+          className="w-full font-sans font-semibold bg-primary-500 text-white hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? "Entrando..." : "Entrar"}
         </Button>
-        <p className="text-center text-sm font-sans">
+        <p className="text-center text-sm font-sans text-text-light dark:text-text-dark">
           ¿No tienes cuenta?{" "}
           <Link to="/register" className="text-primary-500 hover:underline">
             Registrate aquí

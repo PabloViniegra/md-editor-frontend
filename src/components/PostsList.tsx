@@ -14,15 +14,15 @@ export default function PostsList() {
   const { posts, isLoading } = usePosts(debouncedSearch, orderBy);
   if (isLoading) {
     return (
-      <div className="flex justify-center py-10">
-        <Spinner className="h-8 w-8 text-indigo-600" />
+      <div className="flex justify-center py-10 bg-background-light dark:bg-background-dark min-h-screen">
+        <Spinner className="size-8 text-primary-500 dark:text-primary-400" />
       </div>
     );
   }
 
   return (
-    <>
-      <div className="bg-white p-4 rounded-lg shadow mb-4">
+    <div className="bg-background-light dark:bg-background-dark min-h-screen">
+      <div className="bg-surface-light dark:bg-surface-dark p-4 rounded-lg shadow mb-4">
         <PostsFilter
           search={searchTerm}
           onSearch={setSearchTerm}
@@ -46,6 +46,6 @@ export default function PostsList() {
           ))}
         </motion.section>
       </ScrollArea>
-    </>
+    </div>
   );
 }

@@ -8,8 +8,8 @@ export default function PostView() {
   const { post, isLoading } = usePost(Number(postId));
   if (isLoading || !post) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <Spinner className="size-8 text-primary-500" />
+      <div className="flex items-center justify-center h-screen bg-background-light dark:bg-background-dark">
+        <Spinner className="size-8 text-primary-500 dark:text-primary-400" />
       </div>
     );
   }

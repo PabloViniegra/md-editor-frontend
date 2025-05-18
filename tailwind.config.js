@@ -22,6 +22,13 @@ export default {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        background: {
+          DEFAULT: "#FFFFFF",
+          light: "#FFFFFF",
+          dark: "#1F2937",
+        },
+        surface: { light: "#F9FAFB", dark: "#374151" },
+        text: { light: "#111827", dark: "#F3F4F6" },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -33,6 +40,8 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          500: "#3B82F6",
+          600: "#2563EB",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -63,5 +72,9 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+  ],
 };

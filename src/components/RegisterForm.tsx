@@ -95,95 +95,114 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-heading font-bold mb-6 text-center text-primary-500">
-          Registro
-        </h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem className="font-sans">
-                  <FormLabel className="font-sans">Usuario</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nombre de usuario" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark p-4">
+      <Card className="w-full max-w-md bg-white dark:bg-surface-dark shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl font-heading font-bold text-primary-600 dark:text-primary-400">
+            Registro
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-text-light dark:text-text-dark">
+                      Usuario
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Nombre de usuario"
+                        {...field}
+                        className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600"
+                      />
+                    </FormControl>
+                    <FormMessage className="dark:text-destructive-foreground" />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="font-sans">
-                  <FormLabel className="font-sans">Contraseña</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Contraseña segura"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                  <div className="mt-2">
-                    <Progress
-                      value={strength}
-                      max={100}
-                      className={`${getBarColor(strength)} h-2 rounded`}
-                    />
-                    <p
-                      className={`mt-1 text-sm font-sans font-medium text-center \$\{strength < 60 ? "text-red-600" : "text-green-700"\}
-                      }`}
-                    >
-                      {getStrengthLabel(strength)}
-                    </p>
-                  </div>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-text-light dark:text-text-dark">
+                      Contraseña
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Contraseña segura"
+                        {...field}
+                        className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600"
+                      />
+                    </FormControl>
+                    <FormMessage className="dark:text-destructive-foreground" />
+                    <div className="mt-2">
+                      <Progress
+                        value={strength}
+                        max={100}
+                        className={`${getBarColor(strength)} h-2 rounded`}
+                      />
+                      <p
+                        className={`mt-1 text-sm font-sans text-center ${
+                          strength < 60 ? "text-red-600" : "text-green-700"
+                        } dark:${
+                          strength < 60 ? "text-red-400" : "text-green-300"
+                        }`}
+                      >
+                        {getStrengthLabel(strength)}
+                      </p>
+                    </div>
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem className="font-sans">
-                  <FormLabel className="font-sans">
-                    Confirmar Contraseña
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Repite tu contraseña"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-text-light dark:text-text-dark">
+                      Confirmar Contraseña
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Repite tu contraseña"
+                        {...field}
+                        className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600"
+                      />
+                    </FormControl>
+                    <FormMessage className="dark:text-destructive-foreground" />
+                  </FormItem>
+                )}
+              />
 
-            <Button
-              type="submit"
-              className="w-full font-sans font-semibold text-white bg-blue-500 hover:bg-primary-600 disabled:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={!form.formState.isValid || isPending}
-            >
-              {isPending ? (
-                <>
-                  <Spinner className="h-5 w-5 mr-2 inline-block" />
-                  Registrando...
-                </>
-              ) : (
-                "Registrar"
-              )}
-            </Button>
-          </form>
-        </Form>
-      </div>
+              <CardFooter>
+                <Button
+                  type="submit"
+                  className="w-full font-heading font-semibold text-white bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!form.formState.isValid || isPending}
+                >
+                  {isPending ? (
+                    <>
+                      <Spinner className="size-5 mr-2 text-white" />
+                      Registrando...
+                    </>
+                  ) : (
+                    "Registrar"
+                  )}
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

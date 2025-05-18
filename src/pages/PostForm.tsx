@@ -76,78 +76,88 @@ export default function PostForm() {
 
   if (isEdit && isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <Spinner className="size-8 text-indigo-600 m-auto" />
+      <div className="flex items-center justify-center h-screen bg-background-light dark:bg-background-dark">
+        <Spinner className="size-8 text-primary-500 dark:text-primary-400" />
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <div className="flex justify-end mb-4">
-        <SidebarTips />
-      </div>
-      <h1 className="text-2xl mb-6 font-heading font-bold text-center">
-        {isEdit ? "Editar Post" : "Crear Post"}
-      </h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem className="font-sans">
-                <FormLabel>Título</FormLabel>
-                <FormControl>
-                  <Input placeholder="Título del post" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem className="font-sans">
-                <FormLabel>Contenido (Markdown)</FormLabel>
-                <FormControl>
-                  <div>
-                    <MarkdownEditor
-                      value={field.value}
-                      onChange={field.onChange}
+    <div className="min-h-screen bg-background-light dark:bg-background-dark py-6 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex justify-end mb-4">
+          <SidebarTips />
+        </div>
+        <h1 className="text-2xl mb-6 font-heading font-bold text-text-light dark:text-text-dark text-center">
+          {isEdit ? "Editar Post" : "Crear Post"}
+        </h1>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="font-sans">
+                  <FormLabel className="text-text-light dark:text-text-dark">
+                    Título
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Título del post"
+                      {...field}
+                      className="bg-white dark:bg-surface-dark dark:text-text-dark border border-gray-200 dark:border-gray-600 focus:ring-primary-500 focus:border-primary-500"
                     />
+                  </FormControl>
+                  <FormMessage className="dark:text-destructive-foreground" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem className="font-sans">
+                  <FormLabel className="text-text-light dark:text-text-dark">
+                    Contenido (Markdown)
+                  </FormLabel>
+                  <FormControl>
+                    <div>
+                      <MarkdownEditor
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage className="dark:text-destructive-foreground" />
+
+                  <div className="h-6 mt-2 flex items-center justify-start text-sm font-sans text-text-light dark:text-text-dark">
+                    {isSaving && (
+                      <>
+                        <Spinner className="size-4 text-gray-500 dark:text-gray-400" />
+                        <span className="ml-2">Guardando borrador...</span>
+                      </>
+                    )}
                   </div>
-                </FormControl>
-                <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <div className="h-6 mt-2 flex items-center justify-start text-sm font-sans text-gray-500">
-                  {isSaving && (
-                    <>
-                      <Spinner className="size-4 text-gray-500" />
-                      <span className="ml-2">Guardando borrador...</span>
-                    </>
-                  )}
-                </div>
-              </FormItem>
-            )}
-          />
-
-          <Button
-            type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 font-heading font-semibold"
-            disabled={form.formState.isSubmitting}
-          >
-            {isEdit
-              ? isUpdating
-                ? "Actualizando..."
-                : "Actualizar Post"
-              : isCreating
-              ? "Creando..."
-              : "Crear Post"}
-          </Button>
-        </form>
-      </Form>
+            <Button
+              type="submit"
+              className="w-full font-heading font-semibold bg-primary-500 text-white hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={form.formState.isSubmitting}
+            >
+              {isEdit
+                ? isUpdating
+                  ? "Actualizando..."
+                  : "Actualizar Post"
+                : isCreating
+                ? "Creando..."
+                : "Crear Post"}
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }
