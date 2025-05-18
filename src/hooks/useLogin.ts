@@ -9,6 +9,7 @@ export function useLogin() {
     return useMutation({
         mutationFn: (data: { username: string, password: string }) => apiLogin(data),
         onSuccess: (response) => {
+            // @ts-ignore: La API realmente devuelve `token` (no `access_token`)
             localStorage.setItem("token", response.data.token);
             queryClient.invalidateQueries({ queryKey: ["currentUser"] });
             toast.success("Usuario logueado con éxito");
