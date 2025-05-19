@@ -9,7 +9,9 @@ import { Toaster } from "sonner";
 import PostForm from "./pages/PostForm";
 import PostView from "./pages/PostView";
 import { useDarkMode } from "@/hooks/useDarkMode";
+import process from "process";
 
+process.cwd = () => "/";
 const queryClient = new QueryClient();
 
 function Root() {
