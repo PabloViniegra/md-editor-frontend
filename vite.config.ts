@@ -1,16 +1,17 @@
+// vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tsConfigPaths from 'vite-tsconfig-paths'
-import { fileURLToPath } from 'url'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import path from 'path'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 export default defineConfig({
     plugins: [
         react(),
-        tsConfigPaths(),
+        tsconfigPaths(),
+        nodePolyfills({
+            protocolImports: true,
+        }),
     ],
     resolve: {
         alias: {
